@@ -1,6 +1,25 @@
 # IRSA
 IRSA
-RSA
+
+
+## Diagrama de flujo:
+Inicia Venta --> Detalle de cobranza --> Realizó conexión con ConfiguraIntSiTefInteractivo --> Espera OK --> Genera factura(Electronica, fiscal, etc) --> Envío a IRSA una vez la factura está emitida con EnviaInformacoesSiTef
+
+
+## Funcionamiento básico del ejemplo:
+
+### Conexión:
+Primero que nada se debe realizar la conexión, se puede realizar una vez y luego enviar la cantidad de comprobantes que se necesiten, no se cierra la conexión. En caso de incorporarlo en el SIV o Sivimpresion se puede realizar la conexión al iniciar el sistema y listo, pero para evitar problemas realizaría la conexión en cada factura ya que se puede conectar aunque ya estés conectado. En el testeo está conexión se realiza con el botón configura.
+
+### Envío de comprobante:
+Con el otro botón se realiza el envío del comprobante, el cuál se realiza dentro de la función StartTransaction (los parámetros están a modo place holder, no sé están enviando los datos necesarios para el envío de una factura ya que deben cargarse por consulta)
+
+
+#### Ejemplo de string final que se debe enviar TAG + JSON en la función de envío.
+
+002000111234567890100400013002020011077700500008202302270060000607082500900001N013000079999999901400001E02500016EF28042023070825ANF01163{"SEVersion":{"Number":"2"},"Merchant":{"SiTefCode":"ARGAGS00","DocumentMerchant":"20200065620","DocumentMerchantType":"CUIT"},"SaleTicketType":"SALE","merchantId":"20200065620","Terminal":"AR000001","Invoice":[{"InvoiceNumber":{"Type":"B","FiscalPointSaleNumber":"00005","Number":"00003434","InvoiceDeliveryMethod":"FISCAL_PRINTER","documentType":"EFACTURA"},"Date":"20230428","Time":"042525","PriceList":"Publico","Customer":{"Name":"","FiscalSituation":"","DocumentType":"","Number":""},"Products":[{"ProductSKU":"4929495720","ProductDescription":"Testes Fiserv","Quantity":"1","Price":"121.00","DiscountPercentage":"0","DiscountAmount":"0","Amount":"121.00"}],"PaymentValues":[{"PaymentCode":"P","PaymentDescription":"Peso","CardBrand":"","Date":"20230428","Time":"042525","Type":"Efectivo","Symbol":"$","Amount":"121.00","NSUSitef":"","PaymentID":"EF27022023070825"}],"SubTotal":"100.00","DiscountPercentage":"0","DiscountAmount":"0","IVA":[{"Percentage":"21","Amount":"21.00"}],"OtherTaxes":"0","AmountTotal":"121.00"}]}
+
+
 
 Pasos del proceso de homologación (Pág 3):
 Validar en SiTef Express si las transacciones están mostrándose correctamente.
@@ -97,9 +116,6 @@ extern int (__stdcall ConfiguraIntSiTefInterativoEx) (char *pEnderecoIP, char *p
 data2send = “TAGJSON”
 extern int (__stdcall EnviaInformacoesSiTef) (char * data2send, char *ParamAdic);
 
-
-Diagrama de flujo:
-Sistema-->Inicia Venta-->Inicia Pagos --> ConfiguraIntSiTefInteractivo --> Espera OK --> Genera factura(Electronica, fiscal, etc) --> EnviaInformacoesSiTef
 
 QUÉ COMPROBANTES ESTÁN ALCANZADOS
 Facturas y recibos clase A, A con la leyenda PAGO EN CBU INFORMADA y/o M.
@@ -289,7 +305,3 @@ y transmisiones solo para uso interno.
 }]
 }
 ![image](https://user-images.githubusercontent.com/38087860/235285962-5ec40d9e-39cb-4bfb-983f-b3dbce1b438c.png)
-
-Ejemplo de string final que se debe enviar TAG + JSON en la función de envío.
-
-002000111234567890100400013002020011077700500008202302270060000607082500900001N013000079999999901400001E02500016EF28042023070825ANF01163{"SEVersion":{"Number":"2"},"Merchant":{"SiTefCode":"ARGAGS00","DocumentMerchant":"20200065620","DocumentMerchantType":"CUIT"},"SaleTicketType":"SALE","merchantId":"20200065620","Terminal":"AR000001","Invoice":[{"InvoiceNumber":{"Type":"B","FiscalPointSaleNumber":"00005","Number":"00003434","InvoiceDeliveryMethod":"FISCAL_PRINTER","documentType":"EFACTURA"},"Date":"20230428","Time":"042525","PriceList":"Publico","Customer":{"Name":"","FiscalSituation":"","DocumentType":"","Number":""},"Products":[{"ProductSKU":"4929495720","ProductDescription":"Testes Fiserv","Quantity":"1","Price":"121.00","DiscountPercentage":"0","DiscountAmount":"0","Amount":"121.00"}],"PaymentValues":[{"PaymentCode":"P","PaymentDescription":"Peso","CardBrand":"","Date":"20230428","Time":"042525","Type":"Efectivo","Symbol":"$","Amount":"121.00","NSUSitef":"","PaymentID":"EF27022023070825"}],"SubTotal":"100.00","DiscountPercentage":"0","DiscountAmount":"0","IVA":[{"Percentage":"21","Amount":"21.00"}],"OtherTaxes":"0","AmountTotal":"121.00"}]}
