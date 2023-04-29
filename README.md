@@ -18,7 +18,7 @@ Con el otro botón se realiza el envío del comprobante, el cuál se realiza den
 
 ## Resumen de la documentación de la biblioteca
 
-### Archivo 1
+### Archivo Plan de Homologación CliSiTef_Envio de datos_1.7
 
 Pasos del proceso de homologación (Pág 3):
 Validar en SiTef Express si las transacciones están mostrándose correctamente.
@@ -94,12 +94,15 @@ crédito y recibir de la DLL CliSiTef la respuesta “0” el sistema debe mante
 mínimo 30 segundos con la librería CliSiTef para garantizar que la factura fue almacenada en el buffer de 
 la DLL CliSiTef para transmisión al fondo (backgraund) al servidor SiTef.
 
+### Archivo ESPECIFICACIÓN REDUCIDA DE DESARROLLO
+CON CLISITEF PLUS: 
+
 Lista de TAGS Pag 6
 Lista de Tarjetas Pag 9
 Lista de ejemplos  Pag 10 11
 Lista de valores de retorno 11
 
-Configuración de INI 
+#### Configuración de INI 
 [Geral] 
 DataEmAmbienteDeDesenvolvimento=AAAAMMDD
 Donde AAAA=año, MM=mes y DD=día de las pruebas
@@ -107,7 +110,7 @@ Donde AAAA=año, MM=mes y DD=día de las pruebas
 Porta=NENHUM
 
 
-EJEMPLO DE DECLARACIÓN EN “C”
+#### EJEMPLO DE DECLARACIÓN EN “C”
 extern int (__stdcall ConfiguraIntSiTefInterativoEx) (char *pEnderecoIP, char *pCodigoLoja,
  char *pNumeroTerminal,
  short ConfiguraResultado,
@@ -115,8 +118,9 @@ extern int (__stdcall ConfiguraIntSiTefInterativoEx) (char *pEnderecoIP, char *p
 data2send = “TAGJSON”
 extern int (__stdcall EnviaInformacoesSiTef) (char * data2send, char *ParamAdic);
 
+## Archivo Adjunto A - CliSiTef Plus - Pagos-Facturas_1.09.pdf
 
-QUÉ COMPROBANTES ESTÁN ALCANZADOS
+#### QUÉ COMPROBANTES ESTÁN ALCANZADOS
 Facturas y recibos clase A, A con la leyenda PAGO EN CBU INFORMADA y/o M.
 Nota de crédito y débito clase A, A con la leyenda PAGO EN CBU INFORMADA y/o M.
 Facturas y recibos clase B.
@@ -126,7 +130,7 @@ Nota de crédito y débito clase C.
 Facturas y recibos clase E.
 Notas de crédito y notas de débito clase E
 
-DESCRIPCIÓN DE JSON DE FACTURAS (TABLA EN PAG 8)
+#### DESCRIPCIÓN DE JSON DE FACTURAS (TABLA EN PAG 8)
 {
 "SEVersion": {
 "Number": "2"
@@ -215,7 +219,7 @@ y transmisiones solo para uso interno.
 }]
 }
 
-Ejemplo de un comprobante de venta. (NC y demás, en pag 12 adelante)
+#### Ejemplo de un comprobante de venta. (NC y demás, en pag 12 adelante)
 {
 "SEVersion": {
 "Number": "2"
@@ -303,4 +307,6 @@ y transmisiones solo para uso interno.
 "AmountTotal": "5165.98"
 }]
 }
+
+### Imagen explicativa de una venta y como se conforma el string
 ![image](https://user-images.githubusercontent.com/38087860/235285962-5ec40d9e-39cb-4bfb-983f-b3dbce1b438c.png)
